@@ -46,11 +46,13 @@ void keyboard(unsigned char key, int, int)
 
 int main(int argc, char **argv)
 {
-    // 這是 FreeGLUT 的初始化函式。
-    // &argc, argv 是程式從命令列帶入的參數。
-    // FreeGLUT 可能會解析一些命令列參數，例如 -display 或 -geometry。
-    // 必須在呼叫任何其他 GLUT 函式之前呼叫。
-    // 簡單理解：告訴 GLUT “嘿，我要開始用 OpenGL 做視窗了”。
+    /*
+    這是 FreeGLUT 的初始化函式。
+    &argc, argv 是程式從命令列帶入的參數。
+    FreeGLUT 可能會解析一些命令列參數，例如 -display 或 -geometry。
+    必須在呼叫任何其他 GLUT 函式之前呼叫。
+    簡單理解：告訴 GLUT “嘿，我要開始用 OpenGL 做視窗了”。
+    */
     glutInit(&argc, argv);
     /*
     這是 FreeGLUT 專屬的函式，用來設定視窗關閉時的行為。

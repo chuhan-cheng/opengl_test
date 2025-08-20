@@ -1,5 +1,6 @@
 
 #include <GL/freeglut.h>
+#include <cstdio>
 
 // 視窗尺寸
 int winWidth = 800, winHeight = 600;
@@ -120,5 +121,7 @@ int main(int argc, char **argv)
     簡單理解：這是一個「事件監聽迴圈」，負責把你的程式變成互動式應用程式。
     */
     glutMainLoop();
+
+    printf("Main loop exited. Program will now terminate.\n");
     return 0;
 }

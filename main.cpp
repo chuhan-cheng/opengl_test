@@ -5,12 +5,17 @@
 // 視窗尺寸
 int winWidth = 800, winHeight = 600;
 
+// 旋轉角度
+float angle = 0.0f;
+
+// 每幀旋轉增量
+const float deltaAngle = 0.5f;
+
 void display()
 {
-    glClearColor(0.06f, 0.06f, 0.08f, 1.0f); // 深色背景
+    glClearColor(0.06f, 0.06f, 0.08f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // 設定投影與座標（簡單 2D 正交座標）
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
@@ -18,8 +23,11 @@ void display()
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    // 旋轉整個場景
+    glRotatef(angle, 0.0f, 0.0f, 1.0f);
+
     // 畫紅色三角形
-    glColor3f(1.0f, 0.0f, 0.0f); // 紅
+    glColor3f(1.0f, 0.0f, 0.0f);
     glBegin(GL_TRIANGLES);
     glVertex2f(0.0f, 0.6f);
     glVertex2f(-0.6f, -0.6f);
@@ -27,6 +35,16 @@ void display()
     glEnd();
 
     glutSwapBuffers();
+}
+
+// 更新旋轉角度的函式
+void update(int value)
+{
+    angle += deltaAngle;
+    if (angle >= 360.0f) angle -= 360.0f;
+
+    glutPostRedisplay();            // 重新繪製
+    glutTimerFunc(16, update, 0);  // 大約每16ms呼叫一次（60 FPS）
 }
 
 void reshape(int w, int h)
@@ -40,7 +58,7 @@ void reshape(int w, int h)
 void keyboard(unsigned char key, int, int)
 {
     if (key == 27)
-    { // ESC 離開
+    {
         glutLeaveMainLoop();
     }
 }
@@ -111,6 +129,10 @@ int main(int argc, char **argv)
     例如，你可以按 Esc 關閉視窗，或者按 R 改變顏色。
      */
     glutKeyboardFunc(keyboard);
+
+    // 啟動定時器
+    glutTimerFunc(0, update, 0);
+
     /*
     啟動 FreeGLUT 的主迴圈 (Main Loop)。
     它會：

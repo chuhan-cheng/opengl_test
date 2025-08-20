@@ -44,7 +44,7 @@ void update(int value)
     if (angle >= 360.0f) angle -= 360.0f;
 
     glutPostRedisplay();            // 重新繪製
-    glutTimerFunc(16, update, 0);  // 大約每16ms呼叫一次（60 FPS）
+    glutTimerFunc(8, update, 0);  // 大約每16ms呼叫一次（60 FPS）
 }
 
 void reshape(int w, int h)
@@ -82,6 +82,7 @@ int main(int argc, char **argv)
     傳統 GLUT 不支援這種方式，FreeGLUT 才有這個功能。
     */
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
+    glutSetOption(GLUT_MULTISAMPLE, 4); // 嘗試 16x MSAA
     /*
     設定 顯示模式 (Display Mode)。
     GLUT_DOUBLE：
@@ -92,7 +93,8 @@ int main(int argc, char **argv)
     相對於 GLUT_INDEX（調色盤模式），RGBA 是現代 OpenGL 常用方式。
     簡單理解：告訴 GLUT 我要用雙緩衝、RGBA 顏色模式的視窗。
     */
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
+    glEnable(GLUT_MULTISAMPLE);
     /*
     設定視窗 初始大小，單位是像素。
     winWidth 和 winHeight 是你程式裡定義的整數。
@@ -106,6 +108,7 @@ int main(int argc, char **argv)
     例如 "Red Triangle - FreeGLUT" 就會顯示在視窗頂端的標題欄。
     */
     glutCreateWindow("Red Triangle - FreeGLUT");
+    glEnable(GLUT_MULTISAMPLE);
     /*
     註冊 顯示回呼函式 (Display Callback)。
     display 是你自己寫的函式，用來畫畫面（渲染）。
